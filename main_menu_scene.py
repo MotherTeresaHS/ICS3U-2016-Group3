@@ -27,10 +27,17 @@ class MainMenuScene(Scene):
         
         # add background color
         self.background = SpriteNode(position = self.size / 2, 
-                                     color = 'white', 
+                                     color = 'blue', 
                                      parent = self, 
                                      size = self.size)
                                      
+        title_graphic_position = self.size / 2
+        title_graphic_position.y = title_graphic_position.y + 100
+        self.title_graphic = SpriteNode('./assets/sprites/title_graphic.png',
+                                       parent = self,
+                                       position = title_graphic_position,
+                                       scale = 0.5)
+                                       
         self.start_button = SpriteNode('./assets/sprites/start_button.png',
                                        parent = self,
                                        position = self.size / 2,
