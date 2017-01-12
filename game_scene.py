@@ -29,7 +29,9 @@ class GameScene(Scene):
         self.score = 0
         self.alien_attack_rate = 1
         self.scale_size = 0.80
-        
+        self.stroke_began = False
+        self.fish = []
+        self.fish_swim_speed = 20
         # add background color
         background_position = Vector2(self.screen_center_x, 
                               self.screen_center_y)
@@ -43,7 +45,9 @@ class GameScene(Scene):
         self.character = SpriteNode('./assets/sprites/fish.png',
                                      parent = self,
                                      position = self.size/2,
-                                     size = self.size/10)
+                                     size = self.size/3)
+                                     
+    def update(self):
                                      
         #update score if an alien passes the bottom or is hit by a missile
         #self.score_text.text = 'Score: ' + str(self.score)
@@ -98,23 +102,76 @@ class GameScene(Scene):
         #                               position = right_button_position,
         #                               alpha = 0.5,
         #                               scale = self.scale_size)
-            
+        pass
+        
     def touch_began(self, touch):
         # this method is called, when user touches the screen
-        pass
+        
+        if self.character.frame.contains_point(touch.location):
+            self.stroke_began = True
     
     def touch_moved(self, touch):
         # this method is called, when user moves a finger around on the screen
+        
+        # moves the character following user's finger
+        if self.stroke_began == True:
+            self.character.position = touch.location
+#            if (self.character.position.x) < self.size_of_screen_x-50:
+#                if (self.character.position.x) > 50:
+#                    if (self.character.position.y) < self.size_of_screen_y-50:
+#                        if (self.character.position.y) > 50:
+#                            self.character.position = touch.location
+#                        else:
+#                            self.character.position.y += 10
+#                    else:
+#                        self.character.position.y += -10
+#                else:
+#                    self.character.position.x += 10
+#            else:
+#                self.character.position.x += -10
+                    
         
         # move image with your finger
         #self.school_crest.position = touch.location
         #character_move = Action.move_by(20, 0.0, 0.1)
         #self.spaceship.run_action(spaceship_move)
-        pass
+        
+        #if int(touch.location.x) - int(self.character_position.x) < 0:
+        #    fish_move = Action.move_to(touch_location, 2)
+            
+        #FIGURE OUT HOW OT BE THE THINGS OF THE VEST FJDDFh
+        #fish_move_action = Action.move_to(missiles_end_position.x,
+        #                                    missiles_end_position.y+0,
+        #                                    5.0)
+            
+           
+        
+        #self.character_position = touch.location
+        #self.character_position.y = touch.location.y
+         #-1 * (self.character_position.x - touch.location.x)/3
+        
+
+        
+        #if self.left_button_down == True:
+        #    if self.spaceship_position.x < 150:
+        #        self.spaceship_position.x = self.size_of_screen_x
+        #    elif self.spaceship_position.x > self.size_of_screen_x:
+        #        self.spaceship_position.x = 150
+        #    else:
+        #        spaceship_move = Action.move_by(-1*self.ship_move_speed, 0.0, 0.1)
+        #    
+        #    self.spaceship.run_action(spaceship_move)
+        # 
+        #if self.right_button_down == True:
+        #    spaceship_move= Action.move_by(self.ship_move_speed, 0.0, 0.1)
+        #    
+        #    self.spaceship.run_action(spaceship_move
+        #pass
     
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
-        pass
+        
+        self.stroke_began = False
             
     
     def did_change_size(self):
@@ -131,6 +188,22 @@ class GameScene(Scene):
         # this method is called, when user place app from background 
         # back into use. Reload anything you might need.
         pass
-
-    #def add_eatable_fish(self):
-        #add new eatable fish to come into the scene
+        
+    def add_fish(self):
+        #add new fish to enter into screen
+        #based on alien scripting by Mr Coxall
+        
+        fish_start_position = Vector2(-100,random.randint(100, int(self.size_of_screen_y - 100)))
+        
+        fish_end_position = Vector2(self.size_of_screen_x + 100,(random.randint(100, self.size_of_screen_y))
+        
+        self.fish.append(SpriteNode('./assets/sprites/fish.png',
+                                    position = fish_start_position,
+                                    parent = self))
+                                      
+        fishMoveAction = Action.move_to(fish_end_position.x, 
+                                         fish_end_position.y, 
+                                         self.fish_swim_speed,
+                                         TIMING_SINODIAL)
+                                         
+        self.fish[len(self.fish)-1].run_action(fishMoveAction)

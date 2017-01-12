@@ -22,8 +22,8 @@ class MainMenuScene(Scene):
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
         self.screen_center_y = self.size_of_screen_y/2
-        self.scale_size = 0.75
-        self.shrink_size = 0.70
+        self.scale_size = 0.27
+        self.shrink_size = 0.25
         
         # add background color
         self.background = SpriteNode(position = self.size / 2, 
@@ -38,21 +38,23 @@ class MainMenuScene(Scene):
                                        position = title_graphic_position,
                                        scale = 0.5)
                                        
+        start_button_position = Vector2(self.screen_center_x, self.screen_center_y)
+        start_button_position.y = start_button_position.y - 70
         self.start_button = SpriteNode('./assets/sprites/start_button.png',
                                        parent = self,
-                                       position = self.size / 2,
+                                       position = start_button_position,
                                        scale = self.scale_size)
                                        
         help_button_position = self.size / 2
-        help_button_position.y = help_button_position.y - 120
+        help_button_position.y = help_button_position.y - 190
         self.help_button = SpriteNode('./assets/sprites/help_button.png',
                                        parent = self,
                                        position = help_button_position,
                                        scale = self.scale_size)
         # ******COME BACK AND CHANGE THIS ONCE I HAVE MY ARTWORK*****
         about_button_position = self.size / 2
-        about_button_position.y = about_button_position.y - 240
-        self.about_button = SpriteNode('./assets/sprites/start_button.png',
+        about_button_position.y = about_button_position.y - 300
+        self.about_button = SpriteNode('./assets/sprites/about_button.png',
                                        parent = self,
                                        position = about_button_position,
                                        scale = self.scale_size)
