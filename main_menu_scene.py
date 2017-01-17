@@ -8,6 +8,7 @@
 from scene import *
 from help_scene import *
 from about_scene import *
+from game_scene import *
 import ui
 
 
@@ -16,27 +17,47 @@ class MainMenuScene(Scene):
     def setup(self):
         # this method is called, when user moves to this scene
         
+        # to reference objects off of
+        self.size_of_screen_x = self.size.x
+        self.size_of_screen_y = self.size.y
+        self.screen_center_x = self.size_of_screen_x/2
+        self.screen_center_y = self.size_of_screen_y/2
+        self.scale_size = 0.27
+        self.shrink_size = 0.25
+        
         # add background color
-        self.background = SpriteNode('./assets/sprites/school_of_fish.gif',
-                                     position = self.size / 2, 
-                                     color = 'white', 
+        self.background = SpriteNode(position = self.size / 2, 
+                                     color = 'blue', 
                                      parent = self, 
                                      size = self.size)
                                      
+        title_graphic_position = self.size / 2
+        title_graphic_position.y = title_graphic_position.y + 100
+        self.title_graphic = SpriteNode('./assets/sprites/title_graphic.png',
+                                       parent = self,
+                                       position = title_graphic_position,
+                                       scale = 0.5)
+                                       
+        start_button_position = Vector2(self.screen_center_x, self.screen_center_y)
+        start_button_position.y = start_button_position.y - 70
         self.start_button = SpriteNode('./assets/sprites/start_button.png',
                                        parent = self,
-                                       position = self.size / 2)
+                                       position = start_button_position,
+                                       scale = self.scale_size)
                                        
         help_button_position = self.size / 2
-        help_button_position.y = help_button_position.y - 200
+        help_button_position.y = help_button_position.y - 190
         self.help_button = SpriteNode('./assets/sprites/help_button.png',
                                        parent = self,
-                                       position = help_button_position)
+                                       position = help_button_position,
+                                       scale = self.scale_size)
+        # ******COME BACK AND CHANGE THIS ONCE I HAVE MY ARTWORK*****
         about_button_position = self.size / 2
-        about_button_position.y = about_button_position.y - 400
+        about_button_position.y = about_button_position.y - 300
         self.about_button = SpriteNode('./assets/sprites/about_button.png',
                                        parent = self,
-                                       position = about_button_position)
+                                       position = about_button_position,
+                                       scale = self.scale_size)
     
     def update(self):
         # this method is called 60 times per second
@@ -44,26 +65,54 @@ class MainMenuScene(Scene):
     
     def touch_began(self, touch):
         # this method is called when user touches screen
-        pass
+        
+        #to make the buttons react to being touched
+        if self.help_button.frame.contains_point(touch.location):
+            self.help_button.scale = self.shrink_size
+            
+        if self.about_button.frame.contains_point(touch.location):
+            self.about_button.scale = self.shrink_size
+            
+        if self.start_button.frame.contains_point(touch.location):
+            self.start_button.scale = self.shrink_size
     
     def touch_moved(self, touch):
         # this method is called, when user moves a finger around on the screen
-        pass
+        
+        #to make the buttons revert to their original size when the user moves their finger
+        
+        if not self.start_button.frame.contains_point(touch.location):
+            self.start_button.scale = self.scale_size
+            
+        if not self.help_button.frame.contains_point(touch.location):
+            self.help_button.scale = self.scale_size
+            
+        if not self.about_button.frame.contains_point(touch.location):
+            self.about_button.scale = self.scale_size
+            
+        #to make the buttons shrink to their original size when the user moves their finger on top of them
+        if self.start_button.frame.contains_point(touch.location):
+            self.start_button.scale = self.shrink_size
+            
+        if self.help_button.frame.contains_point(touch.location):
+            self.help_button.scale = self.shrink_size
+            
+        if self.about_button.frame.contains_point(touch.location):
+            self.about_button.scale = self.shrink_size
     
     def touch_ended(self, touch):
         # this method is called, when user releases a finger from the screen
         
         # if start button is pressed, go to game scene
-        #if self.start_button.frame.contains_point(touch.location):
-        #    self.present_modal_scene(GameScene())
+        if self.start_button.frame.contains_point(touch.location):
+            self.present_modal_scene(GameScene())
             
         # if start button is pressed, go to game scene
         if self.help_button.frame.contains_point(touch.location):
             self.present_modal_scene(HelpScene())
-           
-        #I will restore this once I have a button whose frame is the same size as the button itself
-        #if self.about_button.frame.contains_point(touch.location):
-        #    self.present_modal_scene(AboutScene())
+            
+        if self.about_button.frame.contains_point(touch.location):
+            self.present_modal_scene(AboutScene())
     
     
     def did_change_size(self):
