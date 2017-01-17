@@ -6,7 +6,7 @@
 from scene import *
 import ui
 from numpy import random
-
+import sound
 
 class GameScene(Scene):
     def setup(self):
@@ -83,11 +83,11 @@ class GameScene(Scene):
         
         #check every update if a fish is off screen
         if len(self.fish) > 0:
-            for fish_off_screen in self.fish:
-            # THE FOLLOWING LINE OF CODE IS GETTING SYNTAX ERRORS
-                if fish_off_screen.position.x > int(self.size_of_screen_x + 10)
-                    fish_off_screen.remove_from_parent()
-                    self.fish.remove(fish_off_screen)
+                    for fish_off_screen in self.fish:
+#            # THE FOLLOWING LINE OF CODE IS GETTING SYNTAX ERRORS
+#                if fish_off_screen.position.x > int(self.size_of_screen_x + 10)
+#                    fish_off_screen.remove_from_parent()
+#                    self.fish.remove(fish_off_screen)
 
 #for alien in self.aliens:
 #            if alien.position.y < + 10:
