@@ -19,23 +19,22 @@ class GameScene(Scene):
         self.screen_center_x = self.size_of_screen_x/2
         self.screen_center_y = self.size_of_screen_y/2
         
+        #game management
         self.game_over = False
         self.score = 0
         self.stroke_began = False
         self.fish = []
         self.fishhooks = []
-
-        self.new_fish_rate = 3
-        self.new_fishhook_rate = 1
-        self.fishhook_speed = 38
-        self.fishhook_end_position_y = 400
-        self.game_over = False
-        #self.score = 0
         
         # constants
         self.scale_size = 0.2
         self.fish_swim_speed = 20
         self.character_swim_speed = 0.8
+        self.new_fish_rate = 3
+        self.new_fishhok_rate = 1
+        self.fishook_speed = 36
+        self.fishhook_end_position_y = 400
+        
         
         # add background image
         background_position = Vector2(self.screen_center_x, 
