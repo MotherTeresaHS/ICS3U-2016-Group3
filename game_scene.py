@@ -78,15 +78,15 @@ class GameScene(Scene):
             if fish.position.x > self.size_of_screen_x + 25:
                 fish.remove_from_parent()
                 self.fish.remove(fish)
-                print("fish removed")
-                print(len(self.fish))
+                #print("fish removed")
+                #print(len(self.fish))
         
        #check every update to see if the character has eaten a fish
         if len(self.fish) > 0:
             for fish_eaten in self.fish:
                 # mr.c I changed the line below to character
                 if fish_eaten.frame.intersects(self.character.frame):
-                    print("Fish was EATEN!")
+                    #print("Fish was EATEN!")
                     self.score += 100
                     #mr.c fixed the line below as well
                     fish_eaten.remove_from_parent()
@@ -105,7 +105,9 @@ class GameScene(Scene):
                 if fishhook.frame.intersects(self.character.frame):
                     print("Character was caught. GAME OVER!")
                     self.game_over = True
-                    self.character.position.y = 30000
+                    fishDead = Action.move_to(-5000, -5000)
+                    self.character.run_action(fishDead)
+                    #self.character.position.y = 30000
                     fishhook.remove_from_parent()
                     self.fishhooks.remove(fishhook)
                     self.character.remove_from_parent()
@@ -119,7 +121,7 @@ class GameScene(Scene):
                     
         # WHEN THE GAME ENDS:
         # when the game ends, show a back to main menu button
-        if self.game_over == True:
+        if self.game_over == True:	
             menu_button_position = Vector2(self.screen_center_x, self.screen_center_y)
             self.menu_button = SpriteNode('./assets/sprites/main_menu_button.png',
                                        parent = self,
@@ -127,7 +129,8 @@ class GameScene(Scene):
                                        alpha = 0.5)
             
         #Update score label
-        self.score_label.text= 'Score: ' + str(self.score)
+        if self.game_over != True:
+            self.score_label.text= 'Score: ' + str(self.score)
         
     def touch_began(self, touch):
         # this method is called, when user touches the screen
@@ -183,7 +186,7 @@ class GameScene(Scene):
         #add new fish to enter into screen
         #based on alien scripting by Mr Coxall
         
-        print("fish added")
+        #print("fish added")
         
         fish_start_position = Vector2(-200, 0)
         fish_start_position_y = random.randint(100, int(self.size_of_screen_y - 100))
@@ -208,14 +211,14 @@ class GameScene(Scene):
                                          self.fish_swim_speed,
                                          TIMING_SINODIAL)
                                         
-        print(len(self.fish))
+        #print(len(self.fish))
         self.fish[int(len(self.fish)-1)].run_action(fish_move_action)
         
     def add_fishhook(self):
         #add new fish hook to enter into screen
         #based on alien scripting by Mr Coxall
         
-        print("fishhook added")
+        #print("fishhook added")
         
         fishhook_start_position = Vector2(0, int(self.size_of_screen_y + 900))
         random.randint(100, int(self.size_of_screen_y - 100))
