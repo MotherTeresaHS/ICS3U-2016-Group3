@@ -31,7 +31,7 @@ class SplashScene(Scene):
         #                               parent = self,
         #                              position = Vector2(self.screen_center_x, self.screen_center_y))
                                        
-        time.sleep(1)
+        #time.sleep(1)
         #see about this after
         self.logo = LabelNode(text = '{devlin}',
                                       font = ('Didot', 45),
