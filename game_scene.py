@@ -62,7 +62,8 @@ class GameScene(Scene):
                                       parent = self,
                                       position = score_label_position,
                                       scale = 0.75)
-                                     
+        # added so score is always rendered last
+        self.score_label.z_position = 999
     def update(self):
         # this method is called 60 times a second to update the game
             
