@@ -27,8 +27,7 @@ class SplashScene(Scene):
                                      color = (0.61, 0.78, 0.87), 
                                      parent = self, 
                                      size = self.size)
-                                       
-        #display logo
+                                      
         self.logo = LabelNode(text = '{devlin}',
                                       font = ('Didot', 45),
                                       color = 'white',
@@ -69,4 +68,3 @@ class SplashScene(Scene):
         # this method is called, when user place app from background 
         # back into use. Reload anything you might need.
         pass
-  

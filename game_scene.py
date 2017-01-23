@@ -27,6 +27,7 @@ class GameScene(Scene):
         self.stroke_began = False
         self.fish = []
         self.fishhooks = []
+        self.game_over = False
         
         # constants: used to regulate gameplay
         self.scale_size = 0.2
@@ -61,7 +62,6 @@ class GameScene(Scene):
                                       parent = self,
                                       position = score_label_position,
                                       scale = 0.75)
-        
         # added so score is always rendered last
         self.score_label.z_position = 999
         
