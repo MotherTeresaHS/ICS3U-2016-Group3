@@ -18,8 +18,9 @@ class HelpScene(Scene):
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
         self.screen_center_y = self.size_of_screen_y/2
-        self.scale_size = 0.3
-        self.shrink_size = 0.25
+        self.scale_size = 0.75
+        self.shrink_size = 1.00
+        self.scale_size_instructions = 0.3
         
         # add background color
         background_position = Vector2(self.screen_center_x, 
@@ -34,28 +35,28 @@ class HelpScene(Scene):
         self.instructions_1 = SpriteNode('./assets/sprites/instructions_1.png',
                                     position = instructions_1_position, 
                                      parent = self, 
-                                     scale = self.scale_size)
+                                     scale = self.scale_size_instructions)
                                      
         instructions_2_position = Vector2(self.screen_center_x, 
                               self.screen_center_y)
         self.instructions_2 = SpriteNode('./assets/sprites/instructions_2.png',
                                     position = instructions_2_position, 
                                      parent = self, 
-                                     scale = self.scale_size + 0.2)
+                                     scale = self.scale_size_instructions + 0.2)
                                      
         instructions_3_position = Vector2(int(self.size_of_screen_x-200), 
                               self.screen_center_y)
         self.instructions_3 = SpriteNode('./assets/sprites/instructions_3.png',
                                     position = instructions_3_position, 
                                      parent = self, 
-                                     scale = self.scale_size)
+                                     scale = self.scale_size_instructions)
                                      
         back_button_position = Vector2(100, 
                               self.size_of_screen_y - 100)
         self.back_button = SpriteNode('./assets/sprites/back_button.png',
                                        parent = self,
                                        position = back_button_position,
-                                       scale = 0.75)
+                                       scale = self.scale_size)
                                        
         
     def update(self):
