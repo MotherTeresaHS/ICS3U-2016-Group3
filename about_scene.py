@@ -18,8 +18,8 @@ class AboutScene(Scene):
         self.size_of_screen_y = self.size.y
         self.screen_center_x = self.size_of_screen_x/2
         self.screen_center_y = self.size_of_screen_y/2
-        self.scale_size = 0.3
-        self.shrink_size = 0.25
+        self.scale_size = 0.75
+        self.shrink_size = 1.00
         
         # add background color
         background_position = Vector2(self.screen_center_x, 
@@ -35,7 +35,7 @@ class AboutScene(Scene):
         self.back_button = SpriteNode('./assets/sprites/back_button.png',
                                        parent = self,
                                        position = back_button_position,
-                                       scale = 0.75)
+                                       scale = scale_size)
         
     def update(self):
         # this method is called, hopefully, 60 times a second
