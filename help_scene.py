@@ -55,7 +55,7 @@ class HelpScene(Scene):
         self.back_button = SpriteNode('./assets/sprites/back_button.png',
                                        parent = self,
                                        position = back_button_position,
-                                       scale = self.scale_size)
+                                       scale = 0.75)
                                        
         
     def update(self):
