@@ -13,6 +13,9 @@ class GameScene(Scene):
     def setup(self):
         # this is called when user moves to the scene
         
+        # used to time out instructions label
+        self.start_time = time.time()
+        
         # size of screen variables are updated to not use deepcopy
         self.size_of_screen_x = self.size.x
         self.size_of_screen_y = self.size.y
@@ -24,19 +27,16 @@ class GameScene(Scene):
         self.stroke_began = False
         self.fish = []
         self.fishhooks = []
-
+        self.game_over = False
+        
+        # constants: used to regulate gameplay
+        self.scale_size = 0.2
+        self.fish_swim_speed = 20
+        self.character_swim_speed = 0.8
         self.new_fish_rate = 3
         self.new_fishhook_rate = 1
         self.fishhook_speed = 38
         self.fishhook_end_position_y = 400
-        self.game_over = False
-        
-        # constants
-        self.scale_size = 0.2
-        self.fish_swim_speed = 20
-        self.character_swim_speed = 0.8
-        
-        # constants, used to regulate game play
         
         # add background image
         background_position = Vector2(self.screen_center_x, 
@@ -64,8 +64,20 @@ class GameScene(Scene):
                                       scale = 0.75)
         # added so score is always rendered last
         self.score_label.z_position = 999
+        
+        # to add the instruction
+        self.instruction = LabelNode(text = 'TAP AND DRAG TO MOVE',
+                                      font = ('Futura', 20),
+                                      color = 'white',
+                                      parent = self,
+                                      position = Vector2(self.screen_center_x, self.screen_center_y))
+        
     def update(self):
         # this method is called 60 times a second to update the game
+        
+        #to make the instruction label disappear after a couple seconds
+        if not self.presented_scene and time.time() - self.start_time > 3:
+            self.instruction.text = ''
             
         # CODE FOR LITTLE FISH:
         # every update, randomly check if new fish should be added
@@ -79,19 +91,20 @@ class GameScene(Scene):
             if fish.position.x > self.size_of_screen_x + 25:
                 fish.remove_from_parent()
                 self.fish.remove(fish)
-                #print("fish removed")
-                #print(len(self.fish))
+                print("fish removed")
+                print(len(self.fish))
         
        #check every update to see if the character has eaten a fish
         if len(self.fish) > 0:
             for fish_eaten in self.fish:
                 # mr.c I changed the line below to character
                 if fish_eaten.frame.intersects(self.character.frame):
-                    #print("Fish was EATEN!")
-                    self.score += 100
-                    #mr.c fixed the line below as well
-                    fish_eaten.remove_from_parent()
-                    self.fish.remove(fish_eaten)
+                    if self.game_over == False:
+                        print("Fish was EATEN!")
+                        self.score += 100
+                        #mr.c fixed the line below as well
+                        fish_eaten.remove_from_parent()
+                        self.fish.remove(fish_eaten)
                     
         # CODE FOR FISHHOOKS:    
         # every update, randomly check if new fishhook should be added
@@ -106,9 +119,7 @@ class GameScene(Scene):
                 if fishhook.frame.intersects(self.character.frame):
                     print("Character was caught. GAME OVER!")
                     self.game_over = True
-                    fishDead = Action.move_to(-5000, -5000)
-                    self.character.run_action(fishDead)
-                    #self.character.position.y = 30000
+                    self.character.position.y = 30000000
                     fishhook.remove_from_parent()
                     self.fishhooks.remove(fishhook)
                     self.character.remove_from_parent()
@@ -122,7 +133,7 @@ class GameScene(Scene):
                     
         # WHEN THE GAME ENDS:
         # when the game ends, show a back to main menu button
-        if self.game_over == True:	
+        if self.game_over == True:
             menu_button_position = Vector2(self.screen_center_x, self.screen_center_y)
             self.menu_button = SpriteNode('./assets/sprites/main_menu_button.png',
                                        parent = self,
@@ -130,8 +141,7 @@ class GameScene(Scene):
                                        alpha = 0.5)
             
         #Update score label
-        if self.game_over != True:
-            self.score_label.text= 'Score: ' + str(self.score)
+        self.score_label.text= 'Score: ' + str(self.score)
         
     def touch_began(self, touch):
         # this method is called, when user touches the screen
@@ -187,7 +197,7 @@ class GameScene(Scene):
         #add new fish to enter into screen
         #based on alien scripting by Mr Coxall
         
-        #print("fish added")
+        print("fish added")
         
         fish_start_position = Vector2(-200, 0)
         fish_start_position_y = random.randint(100, int(self.size_of_screen_y - 100))
@@ -212,14 +222,14 @@ class GameScene(Scene):
                                          self.fish_swim_speed,
                                          TIMING_SINODIAL)
                                         
-        #print(len(self.fish))
+        print(len(self.fish))
         self.fish[int(len(self.fish)-1)].run_action(fish_move_action)
         
     def add_fishhook(self):
         #add new fish hook to enter into screen
         #based on alien scripting by Mr Coxall
         
-        #print("fishhook added")
+        print("fishhook added")
         
         fishhook_start_position = Vector2(0, int(self.size_of_screen_y + 900))
         random.randint(100, int(self.size_of_screen_y - 100))
