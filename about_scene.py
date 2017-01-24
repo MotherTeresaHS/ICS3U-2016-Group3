@@ -35,7 +35,7 @@ class AboutScene(Scene):
         self.back_button = SpriteNode('./assets/sprites/back_button.png',
                                        parent = self,
                                        position = back_button_position,
-                                       scale = self.scale_size)
+                                       scale = 0.75)
         
     def update(self):
         # this method is called, hopefully, 60 times a second
